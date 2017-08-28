@@ -3,6 +3,9 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {Routes, RouterModule} from '@angular/router';
+import {HttpClientModule, HttpClient} from '@angular/common/http';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {AppComponent} from './app.component';
 import {ChildComponent} from './component/child.component';
@@ -15,18 +18,28 @@ import BoardService from './service/board.service';
 import UserService from './service/user.service';
 
 const appRoutes: Routes = [
-    {path: '', component: ChildComponent},
-    {path: 'board', component: BoardComponent},
-    {path: 'book', component: BookComponent},
-    {path: 'user', component: UserComponent}
+  {path: '', component: ChildComponent},
+  {path: 'board', component: BoardComponent},
+  {path: 'book', component: BookComponent},
+  {path: 'user', component: UserComponent}
 ];
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(appRoutes)],
-    declarations: [AppComponent, ChildComponent, BookComponent, BoardComponent, UserComponent],
-    providers: [{provide: 'bookService', useClass: BookService},
-        {provide: 'boardService', useClass: BoardService}, {provide: 'userService', useClass: UserService}],
-    bootstrap: [AppComponent]
+  imports: [BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(appRoutes), HttpClientModule, TranslateModule.forRoot({
+    loader: {
+      provide: TranslateLoader,
+      useFactory: HttpLoaderFactory,
+      deps: [HttpClient]
+    }
+  })],
+  declarations: [AppComponent, ChildComponent, BookComponent, BoardComponent, UserComponent],
+  providers: [{provide: 'bookService', useClass: BookService},
+    {provide: 'boardService', useClass: BoardService}, {provide: 'userService', useClass: UserService}],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
+}
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
 }

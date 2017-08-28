@@ -29,7 +29,7 @@ export default class BoardService implements IBoardService {
       .then(response => response.json());
   }
 
-  deleteById(id: number): Promise<Board> {
+  deleteById(id: number): Promise<Response> {
     return this.http.get(BOARD_DEL_BY_ID + id)
       .toPromise()
       .then(response => response.json());

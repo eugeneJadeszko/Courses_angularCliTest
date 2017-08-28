@@ -1,4 +1,5 @@
 import Board from '../model/board';
+import {Http} from "@angular/http";
 
 /**
  * Service for board
@@ -24,7 +25,7 @@ interface IBoardService {
    * @param {number} id - board id
    * @returns {Promise<Board>}
    */
-  deleteById(id: number): Promise<Board>;
+  deleteById(id: number): Promise<Response>;
 }
 
 export default IBoardService;
