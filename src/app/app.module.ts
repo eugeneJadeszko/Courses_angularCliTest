@@ -17,6 +17,9 @@ import BookService from './service/book.service';
 import BoardService from './service/board.service';
 import UserService from './service/user.service';
 
+const URL_I18N_FILES = 'assets/i18n/';
+const FILE_FORMAT = '.json';
+
 const appRoutes: Routes = [
   {path: '', component: ChildComponent},
   {path: 'board', component: BoardComponent},
@@ -41,5 +44,5 @@ export class AppModule {
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, URL_I18N_FILES, FILE_FORMAT);
 }
